@@ -1,7 +1,7 @@
 package frontend.lexer;
 
 public enum TokenType {
-    IDENFR,    // Ident
+    IDENFR,     // Ident
     INTCON,     // IntConst
     STRCON,     // StringConst
     CONSTTK,    // const
@@ -39,4 +39,5 @@ public enum TokenType {
     LBRACE,     // {
     RBRACE,     // }
     ASSIGN,     // =
+    EOF,        // end
 }

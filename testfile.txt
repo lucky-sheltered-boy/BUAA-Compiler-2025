@@ -1,11 +1,142 @@
-const int array[2] = {1,2};
+// 节选自数据结构第六次上机题
+int ar[101];
 
-int main(){
-    int c;
-    c = getint();
-    printf("output is %d",c);
-    int a;
-    int b;
-    a = a & b;
-    return c;
+void select_sort(int ar[], int n) {
+	int i, j, d, temp, sum = 0;
+	for (i = 0; i < n - 1; i = i + 1) {
+		d = i;
+		for (j = i + 1; j < n; j = j + 1) {
+			sum = sum + 1;
+			if (ar[j] < ar[d])
+				d = j;
+		}
+		if (d != i) {
+			temp = ar[d];
+			ar[d] = ar[i];
+			ar[i] = temp;
+		}
+	}
+	int i = 0; //重定义 19 b
+	for (; i < n; i = i + 1)
+		printf("%d ", ar[i]);
+	printf("\n");
+	printf("%d", sum);
+}
+
+int adjust(int k[], int i, int n, int sum) {
+	int j, temp;
+	temp = k[i];
+	j = 2 * i + 1;
+
+	for (; j < n;) {
+		if (j < n - 1 && k[j] < k[j + 1])
+			j = j + 1;
+		sum = sum + 1;
+		if (temp >= k[j])
+			break;
+		k[(j - 1 / 2] = k[j]; //缺右括号 37 j
+		j = 2 * j + 1;
+	}
+
+	k[(j - 1) / 2 = temp; //缺右中括号 41 k
+} // 缺少return语句 42 g
+
+void heap_sort(int k[], int n) {
+	int i, temp;
+	int sum = 0;
+	for (i = n / 2 - 1; i >= 0; i = i - 1)
+		sum = adjust(k, i, n, sum);
+	for (i = n - 1; i >= 1; i = i - 1) {
+		temp = k[i];
+		k[i] = k[0];
+		k[0] = temp;
+		sum = adjust(k, 0, i, sum);
+	}
+	for (i = 0; i < n; i = i + 1)
+		printf("%d ", k[i]);
+	printf("\n%d", sum);
+}
+
+int merge(int x[], int tmp[], int left, int leftend, int rightend, int sum) { //归并子算法
+	int i, j, q;
+
+	for (i = left, j = leftend + 1, q = left; i <= leftend && j <= rightend;) {
+		sum = sum + 1;
+		if (x[i] <= x[j]) {
+			tmp[q] = x[i];
+			q = q + 1;
+			i = i + 1;
+		} else {
+			tmp[q] = x[j];
+			q = q + 1;
+			j = j + 1;
+		}
+	}
+
+	for (; i <= leftend;) {
+		tmp[q] = x[i];
+		q = q + 1;
+		i = i + 1;
+	}
+
+	for (; j <= rightend;) {
+		tmp[q] = x[j];
+		q = q + 1;
+		j = j + 1;
+	}
+
+	for (i = left; i <= rightend; i = i + 1)
+		x[i] = tmp[i];
+	return sum;
+}
+
+int mpass(int k[], int tmp[], int left, int right) {
+	int center;
+	static int sum = 0;
+	if (left < right) {
+		center = (left + right) / 2;
+		mpass(k, tmp, left, center);
+		mpass(k, tmp, center + 1, right);
+		break; // 不应该有 break 语句 100 m
+		sum = merge(k, tmp, left, center, right, sum);
+	}
+	return sum;
+}
+
+void merge_sort(int k[], int n) {
+	int sum = 0;
+	int tmp[10000];
+	sum = mpass(k, tmp, 0, n - 1);
+
+	int i;
+	for (i = 0; i < n; i = i + 1)
+		printf("%d ", k[i]) // 缺分号 113 i
+	printf("\n%d", sum);
+	return 0; // 不应该有return语句 115 f
+}
+
+int main() {
+	int n, i, op;
+	n = getint();
+	op = getint();
+	for (i = 0; i < n; i = i + 1)
+		br[i] = getint(); // br 数组未定义 123 c
+
+	if (op == 1){
+		printf("Calling Selection Sort\n");
+		select_sort(ar, n);
+	} else if (op == 2){
+		printf("Calling Bubble Sort\n");
+		bubble_sort(); // 函数未定义 130 c
+	} else if (op == 3){
+		printf("Calling Heap Sort\n");
+		heap_sort(ar, n);
+	} else if (op == 4){
+		printf("Calling Merge Sort\n");
+		merge_sort(ar); // 函数参数个数不对 136 d
+	}  else {
+	    printf("Error: op must be between 1 and 5");
+	}
+
+	return 0;
 }

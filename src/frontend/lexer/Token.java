@@ -1,6 +1,8 @@
 package frontend.lexer;
 
-public class Token {
+import frontend.parser.Node;
+
+public class Token implements Node {
     private TokenType type;
     private String value;
     private int line;

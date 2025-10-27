@@ -1,5 +1,10 @@
+import frontend.Visitor.Symbol.SymbolType;
+import frontend.Visitor.SymbolTable;
+import frontend.Visitor.Visitor;
 import frontend.lexer.Lexer;
 import frontend.lexer.TokenStream;
+import frontend.parser.AST.CompUnit;
+import frontend.parser.Parser;
 import utils.ErrorLog;
 import utils.Printer;
 
@@ -23,6 +28,15 @@ public class Compiler {
         // 词法分析
         TokenStream tokenStream = Lexer.getInstance(pushbackReader).lex();
         Printer.printToLexer(tokenStream.toString());
+
+        // 语法分析
+        CompUnit compUnit = Parser.getInstance(tokenStream).parse();
+        Printer.printToParser(compUnit.toString());
+
+        // 语义分析
+        Visitor visitor = Visitor.getInstance();
+        SymbolTable symbolTable = visitor.check(compUnit);
+        Printer.printToSymbol(symbolTable.toString());
 
         // 输出错误
         if (ErrorLog.getInstance().getErrorNum() != 0) {
